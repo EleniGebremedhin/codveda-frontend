@@ -1,0 +1,418 @@
+/* =========================
+   1. Theme colors
+========================= */
+
+:root {
+  --page-bg: #f5f2fc;
+  --surface: #ffffff;
+  --text: #29243b;
+  --muted: #777187;
+  --primary: #7044c5;
+  --primary-hover: #5832a5;
+  --border: #e7e1f0;
+  --soft-bg: #f3effb;
+  --shadow: 0 12px 35px rgba(54, 35, 91, 0.09);
+}
+
+/* Dark theme */
+
+body.dark-mode {
+  --page-bg: #171522;
+  --surface: #231f32;
+  --text: #f2effa;
+  --muted: #b8b0ca;
+  --primary: #b69aff;
+  --primary-hover: #9c79f5;
+  --border: #3b344f;
+  --soft-bg: #302941;
+  --shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+}
+
+/* =========================
+   2. General styling
+========================= */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 40px 18px;
+  font-family: Arial, sans-serif;
+  background: var(--page-bg);
+  color: var(--text);
+  line-height: 1.6;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid rgba(112, 68, 197, 0.25);
+  outline-offset: 2px;
+}
+
+/* =========================
+   3. Main dashboard
+========================= */
+
+.container {
+  width: 100%;
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 35px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+}
+
+h1 {
+  margin: 0 0 6px;
+  color: var(--primary);
+  font-size: clamp(26px, 4vw, 34px);
+  line-height: 1.3;
+  letter-spacing: -0.8px;
+}
+
+h2 {
+  margin: 0 0 14px;
+  font-size: 19px;
+}
+
+p {
+  color: var(--muted);
+}
+
+/* =========================
+   4. App header
+========================= */
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.app-header p {
+  margin: 0;
+}
+
+#theme-toggle {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* =========================
+   5. Add-task form
+========================= */
+
+.task-section {
+  margin-bottom: 25px;
+}
+
+#task-form {
+  display: flex;
+  gap: 12px;
+}
+
+input {
+  min-height: 46px;
+  padding: 11px 13px;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+#task-form input {
+  flex: 1;
+  min-width: 0;
+}
+
+input::placeholder {
+  color: #9992a8;
+}
+
+input:focus {
+  border-color: var(--primary);
+}
+
+button {
+  padding: 11px 16px;
+  color: #ffffff;
+  background: var(--primary);
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+button:hover {
+  background: var(--primary-hover);
+}
+
+#task-form button {
+  min-height: 46px;
+  white-space: nowrap;
+}
+
+/* =========================
+   6. Search and filters
+========================= */
+
+.task-controls {
+  margin-bottom: 25px;
+}
+
+#search-input {
+  width: 100%;
+  margin-bottom: 14px;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.filters button {
+  color: var(--primary);
+  background: var(--soft-bg);
+}
+
+.filters button:hover,
+.filters button.active {
+  color: #ffffff;
+  background: var(--primary);
+}
+
+body.dark-mode .filters button {
+  color: var(--text);
+}
+
+body.dark-mode .filters button:hover,
+body.dark-mode .filters button.active {
+  color: #ffffff;
+  background: var(--primary-hover);
+}
+
+/* =========================
+   7. Statistics cards
+========================= */
+
+.statistics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin: 25px 0 30px;
+}
+
+.stat-card {
+  padding: 17px 12px;
+  text-align: center;
+  background: var(--soft-bg);
+  border: 1px solid var(--border);
+  border-radius: 13px;
+}
+
+.stat-card h3 {
+  margin: 0 0 5px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.stat-card p {
+  margin: 0;
+  color: var(--primary);
+  font-size: 27px;
+  font-weight: 700;
+}
+
+/* =========================
+   8. Task list and cards
+========================= */
+
+.tasks-container h2 {
+  margin-bottom: 15px;
+}
+
+#task-list {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 17px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.task-item:hover {
+  border-color: #c9b6ee;
+  box-shadow: 0 5px 16px rgba(54, 35, 91, 0.06);
+}
+
+.task-title {
+  overflow-wrap: anywhere;
+  font-weight: 600;
+}
+
+.task-item.completed .task-title {
+  color: var(--muted);
+  text-decoration: line-through;
+}
+
+/* =========================
+   9. Task action buttons
+========================= */
+
+.task-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.task-actions button {
+  padding: 8px 11px;
+  font-size: 13px;
+}
+
+.task-actions .delete-btn {
+  background: #d94d68;
+}
+
+.task-actions .delete-btn:hover {
+  background: #b9324e;
+}
+
+.task-actions .complete-btn {
+  background: #7044c5;
+}
+
+.task-actions .complete-btn:hover {
+  background: #5832a5;
+}
+
+/* =========================
+   10. Empty state
+========================= */
+
+#empty-message {
+  padding: 20px 12px;
+  text-align: center;
+  color: var(--muted);
+  background: var(--soft-bg);
+  border-radius: 12px;
+}
+
+/* =========================
+   11. API connection status
+========================= */
+
+#api-status {
+  margin: 25px 0 0;
+  padding: 10px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+}
+
+/* =========================
+   12. Responsive layout
+========================= */
+
+@media (max-width: 600px) {
+  body {
+    padding: 18px 10px;
+  }
+
+  .container {
+    padding: 22px 16px;
+    border-radius: 15px;
+  }
+
+  #task-form {
+    flex-direction: column;
+  }
+
+  #task-form input,
+  #task-form button {
+    width: 100%;
+  }
+
+  .statistics {
+    gap: 7px;
+  }
+
+  .stat-card {
+    padding: 12px 5px;
+  }
+
+  .stat-card h3 {
+    font-size: 11px;
+  }
+
+  .stat-card p {
+    font-size: 22px;
+  }
+
+  .task-item {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .task-actions {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+  }
+}
