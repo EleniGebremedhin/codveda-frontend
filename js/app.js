@@ -1,4 +1,6 @@
 const API_URL = "http://localhost:3000/tasks";
+let allTasks = [];
+let currentFilter = "all";
 
 // Get the HTML elements
 const taskList = document.getElementById("task-list");
@@ -15,6 +17,9 @@ async function getTasks() {
     }
 
     const tasks = await response.json();
+    allTasks = tasks;
+    displayTasks(allTasks);
+    updateStatistics();
 
     console.log("Tasks received from backend:", tasks);
 
@@ -26,6 +31,50 @@ async function getTasks() {
     apiStatus.textContent = "Unable to connect to server";
   }
 }
+function filterTasks() {
+  let filteredTasks = allTasks;
+
+  if (currentFilter === "pending") {
+    filteredTasks = allTasks.filter((task) => !task.completed);
+  } else if (currentFilter === "completed") {
+    filteredTasks = allTasks.filter((task) => task.completed);
+  }
+
+  displayTasks(filteredTasks);
+}
+
+function updateStatistics() {
+  const totalCount = document.getElementById("total-count");
+  const completedCount = document.getElementById("completed-count");
+  const pendingCount = document.getElementById("pending-count");
+
+  const total = allTasks.length;
+
+  const completed = allTasks.filter((task) => task.completed).length;
+
+  const pending = total - completed;
+
+  totalCount.textContent = total;
+  completedCount.textContent = completed;
+  pendingCount.textContent = pending;
+}
+
+const filterButtons = document.querySelectorAll(".filters button");
+
+filterButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    currentFilter = button.dataset.filter;
+
+    // Update the active button
+    filterButtons.forEach((btn) => {
+      btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+    filterTasks();
+  });
+});
 // Add a new task
 async function addTask(title) {
   try {
