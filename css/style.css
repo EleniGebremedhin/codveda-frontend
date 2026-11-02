@@ -270,7 +270,7 @@ body.dark-mode .filters button.active {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 16px;
+  gap: 10px;
   padding: 17px;
   background: var(--surface);
   border: 1px solid var(--border);
@@ -288,6 +288,8 @@ body.dark-mode .filters button.active {
 .task-title {
   overflow-wrap: anywhere;
   font-weight: 600;
+  flex: 1;
+  min-width: 0;
 }
 
 .task-item.completed .task-title {

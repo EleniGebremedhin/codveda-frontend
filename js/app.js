@@ -78,6 +78,33 @@ async function updateTask(id, completed) {
   }
 }
 
+async function deleteTask(id) {
+  // Ask for confirmation before deleting
+  const confirmDelete = confirm("Are you sure you want to delete this task?");
+
+  if (!confirmDelete) {
+    return;
+  }
+
+  try {
+    const response = await fetch(`${API_URL}/${id}`, {
+      method: "DELETE",
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.message || "Failed to delete task");
+    }
+
+    // Refresh the task list
+    getTasks();
+  } catch (error) {
+    console.error("Error deleting task:", error);
+    alert(error.message);
+  }
+}
+
 // Listen for form submission
 const taskForm = document.getElementById("task-form");
 const taskInput = document.getElementById("task-input");
@@ -131,6 +158,17 @@ function displayTasks(tasks) {
 
     li.appendChild(title);
     li.appendChild(completeButton);
+    // Create a Delete button
+    const deleteButton = document.createElement("button");
+
+    deleteButton.textContent = "Delete";
+    deleteButton.className = "delete-btn";
+
+    deleteButton.addEventListener("click", () => {
+      deleteTask(task.id);
+    });
+
+    li.appendChild(deleteButton);
 
     taskList.appendChild(li);
   });
