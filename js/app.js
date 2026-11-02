@@ -59,6 +59,31 @@ function updateStatistics() {
   pendingCount.textContent = pending;
 }
 
+function searchTasks() {
+  const searchInput = document.getElementById("search-input");
+
+  const searchText = searchInput.value.toLowerCase().trim();
+
+  // First, apply the selected filter
+  let filteredTasks = allTasks;
+
+  if (currentFilter === "pending") {
+    filteredTasks = allTasks.filter((task) => !task.completed);
+  } else if (currentFilter === "completed") {
+    filteredTasks = allTasks.filter((task) => task.completed);
+  }
+
+  // Then, search within the filtered tasks
+  filteredTasks = filteredTasks.filter((task) =>
+    task.title.toLowerCase().includes(searchText),
+  );
+
+  displayTasks(filteredTasks);
+}
+const searchInput = document.getElementById("search-input");
+
+searchInput.addEventListener("input", searchTasks);
+
 const filterButtons = document.querySelectorAll(".filters button");
 
 filterButtons.forEach((button) => {
@@ -72,7 +97,7 @@ filterButtons.forEach((button) => {
 
     button.classList.add("active");
 
-    filterTasks();
+    searchTasks();
   });
 });
 // Add a new task
