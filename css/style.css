@@ -416,3 +416,10 @@ body.dark-mode .filters button.active {
     transition: none !important;
   }
 }
+
+/* Style for completed tasks */
+.completed {
+  text-decoration: line-through;
+  opacity: 0.5;
+  color: gray;
+}

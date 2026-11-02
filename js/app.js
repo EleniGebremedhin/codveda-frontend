@@ -52,6 +52,32 @@ async function addTask(title) {
     alert(error.message);
   }
 }
+
+async function updateTask(id, completed) {
+  try {
+    const response = await fetch(`${API_URL}/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        completed: completed,
+      }),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.message || "Failed to update task");
+    }
+
+    getTasks();
+  } catch (error) {
+    console.error("Error updating task:", error);
+    alert(error.message);
+  }
+}
+
 // Listen for form submission
 const taskForm = document.getElementById("task-form");
 const taskInput = document.getElementById("task-input");
@@ -72,11 +98,10 @@ taskForm.addEventListener("submit", function (event) {
 });
 
 // Display tasks on the webpage
+
 function displayTasks(tasks) {
-  // Clear the previous task list
   taskList.innerHTML = "";
 
-  // Check whether there are any tasks
   if (tasks.length === 0) {
     emptyMessage.style.display = "block";
     return;
@@ -84,7 +109,6 @@ function displayTasks(tasks) {
 
   emptyMessage.style.display = "none";
 
-  // Create an HTML element for each task
   tasks.forEach((task) => {
     const li = document.createElement("li");
     li.className = "task-item";
@@ -97,7 +121,17 @@ function displayTasks(tasks) {
       title.classList.add("completed");
     }
 
+    const completeButton = document.createElement("button");
+    completeButton.textContent = task.completed ? "Undo" : "Complete";
+    completeButton.className = "complete-btn";
+
+    completeButton.addEventListener("click", () => {
+      updateTask(task.id, !task.completed);
+    });
+
     li.appendChild(title);
+    li.appendChild(completeButton);
+
     taskList.appendChild(li);
   });
 }
