@@ -250,3 +250,20 @@ function displayTasks(tasks) {
 
 // Load tasks when the page opens
 getTasks();
+
+// Dark mode toggle
+const themeToggle = document.getElementById("theme-toggle");
+
+themeToggle.addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");
+
+  const isDarkMode = document.body.classList.contains("dark-mode");
+
+  if (isDarkMode) {
+    themeToggle.textContent = "☀️ Light Mode";
+    themeToggle.setAttribute("aria-pressed", "true");
+  } else {
+    themeToggle.textContent = "🌙 Dark Mode";
+    themeToggle.setAttribute("aria-pressed", "false");
+  }
+});
